@@ -2,11 +2,18 @@
 """
 Created on Wed Feb 15 11:36:40 2017
 
-@author: Steve
+@author: Steve Ryan
+
+Purpose - 
+We don't currently have a complete sterelogical solution for analyzing 
+dendritic spines of individuall filled neurons.  This script allows us to 
+import an excel sheet representing the dendrogram and generate a set of 
+pseudorandomly selected points on the dendritic arbor for followup analysis.
 
 Requirements - 
 1: Import dendrogram data from a reconstructed neuron in an Excel / CSV format
-2: Generate a set of random positions in the dendrogram
+2: Generate a set of random positions in the dendrogram for followup imaging 
+   at 100X
  2a:  This will be conducted iteratively so each successive random number can 
       be compared to the existing list of numbers to reject any that would 
       overlap.  For past projects we've always kept the overlap threshold at 
@@ -36,8 +43,8 @@ def main():
     first_sheet = dend_workbook.sheet_by_index(0)
     segment_column = first_sheet.col_values(1)
 
-    existing_list = [12, 150, 400, 2009] # just for testing
-    number_existing = len(existing_list)
+    existing_list = [12, 150, 400, 2009] # toy list, just for testing
+    number_existing = len(existing_list) # establish number of pre-existing points
     number_to_randomize = 10 - number_existing # hardcodes 10 segments as desired output
 
     updated_list = randomLocation(existing_list, number_to_randomize, segment_column)
@@ -71,12 +78,11 @@ def randomLocation(existing_list, number_of_locations, dendrite_segment_list):
     total_length = running_total_column[len(running_total_column)-1]
 
     for i in range(number_to_generate):
-#        print(i)
         new_random_is_valid = False
         while True:
-            # generate random
-            # test validity
-            # repeat or break
+            # generate random location
+            # test validity, must be more than 50 um from existing points
+            # repeat or break based on outcome of validity test
             new_location = random.randint(1, math.floor(total_length))
             new_list_array = numpy.array(new_list)
             new_list_array = abs(new_list_array - new_location)
