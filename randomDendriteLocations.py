@@ -43,9 +43,9 @@ def main():
     first_sheet = dend_workbook.sheet_by_index(0)
     segment_column = first_sheet.col_values(1)
     
-    if first_sheet.ncols > 2:
-        fourth_column = first_sheet.col_values(3)
-        fifth_column = first_sheet.col_values(4)
+#    if first_sheet.ncols > 2:
+#        fourth_column = first_sheet.col_values(3)
+#        fifth_column = first_sheet.col_values(4)
         # third_column and fourth_column don't have obviously cleaner names
         # they refer to the columns added to the spreadsheet by the previous v
         # version of this function.  They store the locations selected by that 
