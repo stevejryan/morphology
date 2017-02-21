@@ -36,8 +36,19 @@ import xlrd
 import random
 import math
 from numpy import array
+import Tkinter
+import tkFileDialog
+import os
 
 def main():
+    
+    root = Tkinter.Tk()
+    root.withdraw()
+    
+    cwd = os.getcwd()
+    newFile = tkFileDialog.askopenfile(parent=root, initialdir=cwd, title='Please select a file')
+    print(newFile)
+    
     filename = "BLA 1-14 #36-2 10x 488.xlsx" # need to get this from interface
     dend_workbook = xlrd.open_workbook(filename)
     first_sheet = dend_workbook.sheet_by_index(0)
