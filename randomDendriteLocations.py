@@ -82,19 +82,19 @@ def main():
 #    number_to_randomize = 10 - number_existing # hardcodes 10 segments as desired output
 
     updated_list = randomLocation(NUMBER_OF_LOCATIONS_TO_GENERATE, segment_column, running_total_column)
-    
+
     print(updated_list)
     updated_list.sort()
     print(updated_list)
     print(len(segment_column))
     print(len(running_total_column))
     print(len(updated_list))
-    
+
 #    output_csv = csv.writer(newFile.name[1:len(newFile.name)-5], 'w+')
 #    output_text_file = open('butthole.txt','w+')
 #    data = array([segment_column, running_total_column, updated_list])
 #    savetxt(output_text_file, data, fmt='%d')
-    
+
 #    output_csv.close()
 
 
