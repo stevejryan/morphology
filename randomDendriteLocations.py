@@ -5,7 +5,7 @@ Created on Wed Feb 15 11:36:40 2017
 @author: Steve Ryan
 
 Purpose - 
-We don't currently have a complete sterelogical solution for analyzing 
+`We don't currently have a complete sterelogical solution for analyzing 
 dendritic spines of individuall filled neurons.  This script allows us to 
 import an excel sheet representing the dendrogram and generate a set of 
 pseudorandomly selected points on the dendritic arbor for followup analysis.
@@ -72,8 +72,8 @@ def main():
         running_total += i
         running_total_column.append(running_total)
 
-    existing_list = [12, 150, 400, 2009] # toy list, just for testing
-    number_existing = len(existing_list) # establish number of pre-existing points
+#    existing_list = [12, 150, 400, 2009] # toy list, just for testing
+#    number_existing = len(existing_list) # establish number of pre-existing points
     number_to_randomize = 10 - number_existing # hardcodes 10 segments as desired output
 
     updated_list = randomLocation(existing_list, number_to_randomize, segment_column, running_total_column)
