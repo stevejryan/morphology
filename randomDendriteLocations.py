@@ -36,20 +36,25 @@ import xlrd
 import random
 import math
 from numpy import array
+from numpy import savetxt
 import Tkinter
 import tkFileDialog
 import os
+import csv
 
 def main():
     
-    root = Tkinter.Tk()
-    root.withdraw()
+    NUMBER_OF_LOCATIONS_TO_GENERATE = 10
+    
+    TkObject = Tkinter.Tk()
+    TkObject.withdraw()
     
     cwd = os.getcwd()
-    newFile = tkFileDialog.askopenfile(parent=root, initialdir=cwd, title='Please select a file')
+    newFile = tkFileDialog.askopenfile(parent=TkObject, initialdir=cwd, title='Please select a file')
     print(newFile)
+    filename = newFile.name # "BLA 1-14 #36-2 10x 488.xlsx" # need to get this from interface
+    newFile.close()
     
-    filename = "BLA 1-14 #36-2 10x 488.xlsx" # need to get this from interface
     dend_workbook = xlrd.open_workbook(filename)
     first_sheet = dend_workbook.sheet_by_index(0)
     segment_column = first_sheet.col_values(1)
@@ -74,16 +79,26 @@ def main():
 
 #    existing_list = [12, 150, 400, 2009] # toy list, just for testing
 #    number_existing = len(existing_list) # establish number of pre-existing points
-    number_to_randomize = 10 - number_existing # hardcodes 10 segments as desired output
+#    number_to_randomize = 10 - number_existing # hardcodes 10 segments as desired output
 
-    updated_list = randomLocation(existing_list, number_to_randomize, segment_column, running_total_column)
+    updated_list = randomLocation(NUMBER_OF_LOCATIONS_TO_GENERATE, segment_column, running_total_column)
+    
     print(updated_list)
+    updated_list.sort()
+    print(updated_list)
+    print(len(segment_column))
+    print(len(running_total_column))
+    print(len(updated_list))
+    
+#    output_csv = csv.writer(newFile.name[1:len(newFile.name)-5], 'w+')
+#    output_text_file = open('butthole.txt','w+')
+#    data = array([segment_column, running_total_column, updated_list])
+#    savetxt(output_text_file, data, fmt='%d')
+    
+#    output_csv.close()
 
 
-def randomLocation(existing_list, number_of_locations, dendrite_segment_list, running_total_column):
-    # Input - existing_list
-    #           List of random points already selected that are being kept, if
-    #           any.  This can be empty.  
+def randomLocation(number_of_locations, dendrite_segment_list, running_total_column):
     # Input - number_of_locations
     #           Total number of locations to generate
     # Input - dendrite_segment_list
@@ -93,14 +108,12 @@ def randomLocation(existing_list, number_of_locations, dendrite_segment_list, ru
     # Output - new_list
     #           new rnandomly generated points
 
-    new_list = existing_list
-    number_to_generate = 10 - len(new_list)
-    if number_to_generate <= 0:
-        return new_list
+    new_list = []
+    
 
     total_length = running_total_column[len(running_total_column)-1]
 
-    for i in range(number_to_generate):
+    for i in range(number_of_locations):
         new_random_is_valid = False
         while True:
             # generate random location
@@ -109,26 +122,26 @@ def randomLocation(existing_list, number_of_locations, dendrite_segment_list, ru
             new_location = random.randint(1, math.floor(total_length))
             new_list_array = array(new_list)
             new_list_array = abs(new_list_array - new_location)
-            if min(new_list_array) < 50:
-                print(new_list)
-#                print(new_list_array)
-                print("{} is Invalid selection, regenerating".format(new_location))
-                new_random_is_valid = False
-            else:
+            print(i)
+            if i==0:
                 new_random_is_valid = True
-            
+            else:
+                if min(new_list_array) < 50:
+                    print(new_list)
+#                    print(new_list_array)
+                    print("{} is Invalid selection, regenerating".format(new_location))
+                    new_random_is_valid = False
+                else:
+                    new_random_is_valid = True
+
             if new_random_is_valid:
                 break
+            
         new_list.append(new_location)
 
     return new_list
 
 
-def convertOldList(segment_column, third_column, fourth_column):
-    # stuff
-    return 0
-    
-    
 
 # 
 if __name__ == "__main__":
