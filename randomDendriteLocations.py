@@ -91,9 +91,9 @@ def main():
     print(len(updated_list))
     
 #    output_csv = csv.writer(newFile.name[1:len(newFile.name)-5], 'w+')
-    output_text_file = open('butthole.txt','w+')
-    data = array([segment_column, running_total_column, updated_list])
-    savetxt(output_text_file, data, fmt='%d')
+#    output_text_file = open('butthole.txt','w+')
+#    data = array([segment_column, running_total_column, updated_list])
+#    savetxt(output_text_file, data, fmt='%d')
     
 #    output_csv.close()
 
